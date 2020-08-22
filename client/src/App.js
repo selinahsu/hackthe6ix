@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 import ClickCard from './components/clickcard';
@@ -12,30 +11,23 @@ import Card from 'react-bootstrap/Card'
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <Container>
-          <Row>
-            <Col xs={1}></Col>
+          <Row className="mt-5">
+            <Col xs>
               <ClickCard />
-            <Col xs={5}>
-              <Card>
+            </Col>
+            <Col xs>
+              <Card className="p-3">
                 <p>sup yo</p>
               </Card>
             </Col>
-            <Col xs={5}>
-              <Card>
-                <p>sup yo</p>
-              </Card>
-            </Col>
-            <Col xs={1}>
-            <Card>
+            <Col xs>
+              <Card className="p-3">
                 <p>sup yo</p>
               </Card>
             </Col>
           </Row>
         </Container>
-      </header>
     </div>
   );
 }

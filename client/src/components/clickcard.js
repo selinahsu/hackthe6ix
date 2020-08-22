@@ -39,10 +39,10 @@ class ClickCard extends React.Component {
 
   render() {
     return (
-      <Card as="a" className="mt-5 p-5">
+      <Card as="a" className="p-4">
         <form onSubmit={this.state.handleSubmit}>
           <div className="recipe-url">
-            <label>Destination</label><br />
+            <label>Recipe Link</label><br />
             <input
               type="text"
               value={this.state.url}

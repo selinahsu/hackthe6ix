@@ -35,7 +35,7 @@ async function apiCall(req, res, next) {
 
 function processJSON(req, res, next) { 
   let ingredients = [];  
-  for(var i = 0; i < res.locals.ingredients.length; i++) {
+  for (let i = 0; i < res.locals.ingredients.length; i++) {
     ingredients[i] = res.locals.ingredients[i].name;
   }
 
