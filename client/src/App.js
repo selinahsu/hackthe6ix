@@ -8,9 +8,16 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card'
 
-function App() {
-  return (
-    <div className="App">
+class App extends React.Component{
+  state = {
+    
+  }
+  componentDidMount() {
+
+  }
+  render() {
+    return (
+      <div className="App">
         <Container>
           <Row className="mt-5">
             <Col xs>
@@ -29,7 +36,8 @@ function App() {
           </Row>
         </Container>
     </div>
-  );
+    );
+  }
 }
 
 export default App;
