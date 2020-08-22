@@ -1,3 +1,11 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
+
+h6 {
+  color: #FF785B;
+}
+
+.col-sm {
+  margin-right: 15px
+}
