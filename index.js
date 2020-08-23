@@ -38,7 +38,7 @@ async function apiCall(req, res, next) {
   next();
 }
 
-async function save_to_sheet(ingredients, instructions) {
+async function save_to_sheet(ingredients, weighedingredients, instructions) {
   const { GoogleSpreadsheet } = require('google-spreadsheet');
 
   // spreadsheet key is the long id in the sheets URL
@@ -57,7 +57,8 @@ async function save_to_sheet(ingredients, instructions) {
   const sheet = doc.sheetsById[0];
   const rows = await sheet.getRows();
   for (let i = 0; i < ingredients.length; ++i) {
-    rows[i].Ingredients = ingredients[i]; // update value
+    rows[i].Ingredients = ingredients[i]; // update values
+    rows[i].WeighedIngredients = weighedingredients[i];
     await rows[i].save(); // save to sheet
   }
   for (let i = 0; i < instructions.length; ++i) {
@@ -69,14 +70,16 @@ async function save_to_sheet(ingredients, instructions) {
 function ingredients_instructions_array(req, res, next) { 
   // change the ingredients list to have only names, instead of detailed objects
   let ingredients = [];  
+  let weighed_ingredients = [];
   for (let i = 0; i < res.locals.ingredients.length; i++) {
     ingredients[i] = res.locals.ingredients[i].name;
+    weighed_ingredients[i] = res.locals.ingredients[i].originalString;
   }
   let instructions = [];
   for (let i = 0; i < res.locals.instructions.length; ++i) {
     instructions[i] = res.locals.instructions[i].step;
   }
-  save_to_sheet(ingredients, instructions);
+  save_to_sheet(ingredients, weighed_ingredients, instructions);
   // overwrite res.locals.ingredients
   res.locals.ingredients = ingredients; 
   console.log(res.locals.ingredients);
