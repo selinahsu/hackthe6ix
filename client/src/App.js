@@ -55,23 +55,23 @@ class App extends React.Component{
         <NavBarComp />
         <Container>
           <Row className="mt-4">
-              <Col xs={1}></Col>
-                <Col xs={10}>
-                  <h5 className="mb-3">Good afternoon Selina!</h5>
-                  <h6>Recent Recipes</h6>
-                </Col>
-                <Col xs={1}></Col>
-            </Row>
-            <Row className="mt-1">
-              <Col xs={1}></Col>
-              <Col xs={5}>
-                <img src={chicken}/>
-              </Col>
-              <Col xs={5}>
-                <img src={fries}/>
+            <Col xs={1}></Col>
+              <Col xs={10}>
+                <h5 className="mb-3">Good afternoon Selina!</h5>
+                <h6>Recent Recipes</h6>
               </Col>
               <Col xs={1}></Col>
-            </Row>
+          </Row>
+          <Row className="mt-1">
+            <Col xs={1}></Col>
+            <Col xs={5}>
+              <img src={chicken}/>
+            </Col>
+            <Col xs={5}>
+              <img src={fries}/>
+            </Col>
+            <Col xs={1}></Col>
+          </Row>
           
           <Row className="mt-4">
             <Col xs={1}></Col>
