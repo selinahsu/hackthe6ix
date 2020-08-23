@@ -7,13 +7,14 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/api/findrecipe', apiCall, ingredientsArray, (req, res) => {
+app.post('/api/findrecipe', apiCall, ingredients_instructions_array, (req, res) => {
   const url = {id: req.body.params.url};
   if (!url) res.status(404).send('Oops! Something went wrong.');
   console.log("i am here");
   res.send({
     title: res.locals.title,
     ingredients: res.locals.ingredients,
+    instructions: res.locals.instructions,
     imageurl: res.locals.imageurl,
   });
 }); 
@@ -32,11 +33,12 @@ async function apiCall(req, res, next) {
   });
   res.locals.title = response.data.title;
   res.locals.ingredients = response.data.extendedIngredients;
+  res.locals.instructions = response.data.analyzedInstructions[0].steps;
   res.locals.imageurl = response.data.image;
   next();
 }
 
-async function savetosheet(ingredients) {
+async function save_to_sheet(ingredients, instructions) {
   const { GoogleSpreadsheet } = require('google-spreadsheet');
 
   // spreadsheet key is the long id in the sheets URL
@@ -54,22 +56,33 @@ async function savetosheet(ingredients) {
 
   const sheet = doc.sheetsById[0];
   const rows = await sheet.getRows();
-  for (let i = 0; i < ingredients.length; i++) {
-    rows[i + 1].Ingredients = ingredients[i]; // update value
-    await rows[i + 1].save(); // save to sheet
+  for (let i = 0; i < ingredients.length; ++i) {
+    rows[i].Ingredients = ingredients[i]; // update value
+    await rows[i].save(); // save to sheet
+  }
+  for (let i = 0; i < instructions.length; ++i) {
+    rows[i].Instructions = instructions[i]; // update value
+    await rows[i].save(); // save to sheet
   }
 }
 
-function ingredientsArray(req, res, next) { 
+function ingredients_instructions_array(req, res, next) { 
   // change the ingredients list to have only names, instead of detailed objects
   let ingredients = [];  
   for (let i = 0; i < res.locals.ingredients.length; i++) {
     ingredients[i] = res.locals.ingredients[i].name;
   }
-  savetosheet(ingredients);
+  let instructions = [];
+  for (let i = 0; i < res.locals.instructions.length; ++i) {
+    instructions[i] = res.locals.instructions[i].step;
+  }
+  save_to_sheet(ingredients, instructions);
   // overwrite res.locals.ingredients
   res.locals.ingredients = ingredients; 
   console.log(res.locals.ingredients);
+  // overwrite res.locals.instructions
+  res.locals.instructions = instructions;
+  console.log(res.locals.instructions);
   next();
 }
 
