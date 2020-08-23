@@ -6,7 +6,7 @@ class NavbarComp extends React.Component {
   render() {
     return (
       <Navbar bg="light" expand="lg">
-        <Col xs={{offset: 1}}>
+        <Col className="ml-2">
           <h5>
             say soup
           </h5>
