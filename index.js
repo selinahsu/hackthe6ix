@@ -7,7 +7,7 @@ const app = express();
 
 app.use(express.json());
 
-app.post('/api/findrecipe', apiCall, processJSON, (req, res) => {
+app.post('/api/findrecipe', apiCall, ingredientsArray, (req, res) => {
   const url = {id: req.body.params.url};
   if (!url) res.status(404).send('Oops! Something went wrong.');
   console.log("i am here");
@@ -31,19 +31,18 @@ async function apiCall(req, res, next) {
     console.log(error);
   });
   res.locals.title = response.data.title;
-  // res.locals.ingredients stores the API=provided array of extendedIngredients objects
   res.locals.ingredients = response.data.extendedIngredients;
   res.locals.imageurl = response.data.image;
   next();
 }
 
-function processJSON(req, res, next) { 
+function ingredientsArray(req, res, next) { 
+  // change the ingredients list to have only names, instead of detailed objects
   let ingredients = [];  
   for (let i = 0; i < res.locals.ingredients.length; i++) {
     ingredients[i] = res.locals.ingredients[i].name;
   }
-
-  // overwrite res.locals.ingredients with just a list of ingredient names
+  // overwrite res.locals.ingredients
   res.locals.ingredients = ingredients; 
   console.log(res.locals.ingredients);
   next();
