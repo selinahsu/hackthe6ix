@@ -12,7 +12,9 @@ app.post('/api/findrecipe', apiCall, processJSON, (req, res) => {
   if (!url) res.status(404).send('Oops! Something went wrong.');
   console.log("i am here");
   res.send({
+    title: res.locals.title,
     ingredients: res.locals.ingredients,
+    imageurl: res.locals.imageurl,
   });
 }); 
 
@@ -28,8 +30,10 @@ async function apiCall(req, res, next) {
   }).catch(function (error) {
     console.log(error);
   });
+  res.locals.title = response.data.title;
   // res.locals.ingredients stores the API=provided array of extendedIngredients objects
   res.locals.ingredients = response.data.extendedIngredients;
+  res.locals.imageurl = response.data.image;
   next();
 }
 

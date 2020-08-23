@@ -6,10 +6,16 @@ import axios from 'axios';
 import history from '../history';
 
 class ClickCard extends React.Component {
-  state = {
-    redirect: false,
-    url: '', 
-    ingredients: '',
+  constructor(props) {
+    super(props);
+    this.state = { 
+      redirect: false,
+      url: '', 
+      title: '',
+      ingredients: '',
+      imageurl: ''
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit = (event) => {
@@ -23,12 +29,15 @@ class ClickCard extends React.Component {
       console.log("haii");
       this.setState({
         ingredients: res.data.ingredients,
+        imageurl: res.data.imageurl
       });
       console.log(`url: ${this.state.url}`);
       console.log(`ingredients: ${this.state.ingredients}`);
     }).catch(function (error) {
       console.log(error);
     });
+    this.props.setPage();
+    this.props.setInfo(this.state.imageurl, this.state.title);
     // history.push({
     //   pathname: '/result',
     //   state: {
