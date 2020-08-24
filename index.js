@@ -23,7 +23,7 @@ app.post('/api/findrecipe', apiCall, ingredients_instructions_array, (req, res) 
 /***************** Middleware *****************/
 
 async function apiCall(req, res, next) { 
-  const apiKey = "c6b333896abc44b690a2b64b3d865f60";
+  const apiKey = "571292e98be44b10b0e4ada20f0e272e";
   const url = req.body.params.url;
   const response = await axios({
     url: `https://api.spoonacular.com/recipes/extract?apiKey=${apiKey}&url=${url}`,
